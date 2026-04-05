@@ -1,0 +1,137 @@
+/* * WAYBAR CONFIGURATION 
+ * Theme: Catppuccin-esque (Customized)
+ */
+
+/* --- Variables --- */
+@define-color bg_dark     #161320;
+@define-color fg_main     #B5E8E0;
+@define-color blue        #96CDFB;
+@define-color cyan        #89DCEB;
+@define-color purple      #DDB6F2;
+@define-color deep_purple #bd93f9;
+@define-color red         #F28FAD;
+@define-color pink        #F2CDCD;
+@define-color lavender    #abb3e9;
+@define-color sky         #b0e5fa;
+@define-color active_ws   #f18aff;
+@define-color disabled    #313244;
+
+/* --- Global Settings --- */
+* {
+    border: none;
+    border-radius: 8px;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+/* --- Base Module Style (The "Pills") --- */
+#cpu, #memory, #network, #bluetooth, #pulseaudio, 
+#battery, #clock, #tray, #workspaces,
+#custom-launcher, #custom-power, #custom-spotify {
+    background: @bg_dark;
+    color: @fg_main;
+    margin: 0px 0px 4px 4px; /* Top Right Bottom Left */
+    padding: 2px 10px;
+}
+
+/* --- Left Modules --- */
+
+#custom-launcher {
+    font-size: 16px;
+    color: @cyan;
+    padding-right: 12px;
+}
+
+#cpu {
+    background: @blue;
+    color: @bg_dark;
+}
+
+#memory {
+    background: @purple;
+    color: @bg_dark;
+}
+
+#network {
+    background: @deep_purple;
+    color: @bg_dark;
+}
+
+#network.disconnected {
+    background: @red;
+}
+
+#custom-spotify {
+    background: @pink;
+    color: @bg_dark;
+}
+
+/* --- Center Modules (Workspaces) --- */
+
+#workspaces button {
+    padding: 0px 5px;
+    color: @fg_main;
+}
+
+#workspaces button.active {
+    color: @active_ws;
+}
+
+#workspaces button.urgent {
+    color: @red;
+}
+
+/* --- Right Modules --- */
+
+#bluetooth {
+    background: @cyan;
+    color: @bg_dark;
+}
+
+#bluetooth.connected {
+    background: @blue;
+}
+
+#bluetooth.disabled {
+    background: @disabled;
+    color: #BAC2DE;
+}
+
+#pulseaudio {
+    background: @sky;
+    color: #1A1826;
+}
+
+#clock {
+    background: @lavender;
+    color: @bg_dark;
+}
+
+#battery {
+    background: @fg_main;
+    color: @bg_dark;
+}
+
+#battery.charging {
+    background: #b660ef;
+}
+
+#battery.critical:not(.charging) {
+    background: @red;
+}
+
+#custom-power {
+    background: @red;
+    color: @bg_dark;
+    font-size: 14px;
+    margin-right: 6px; 
+}
+
+#tray {
+    /* Kept dark to blend with the bar or background */
+}

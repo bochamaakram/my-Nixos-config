@@ -1,0 +1,98 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "spacing": 4,
+
+    // --- Module Layout ---
+    "modules-left": [
+        "custom/launcher", 
+        "cpu", 
+        "memory", 
+        "custom/spotify"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "bluetooth", 
+        "network",   // Moved next to Bluetooth
+        "pulseaudio", 
+        "clock", 
+        "battery"
+    ],
+
+    // --- Left Modules ---
+    "custom/launcher": {
+        "format": " ",
+        "on-click": "walker",
+        "on-click-right": "pkill walker"
+    },
+
+    "cpu": {
+        "format": " {usage}%",
+        "interval": 2
+    },
+
+    "memory": {
+        "format": " {}%",
+        "interval": 5
+    },
+
+    "custom/spotify": {
+        "exec": "~/.config/waybar/scripts/spotify.sh",
+        "return-type": "json",
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    },
+
+    // --- Center Modules ---
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "on-click": "activate"
+    },
+
+    // --- Right Modules ---
+    "bluetooth": {
+        "format": " {status}",
+        "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+        "tooltip-format": "{num_connections} connected",
+        "on-click": "blueman-manager"
+    },
+
+    "network": {
+        "format-wifi": " {essid}",
+        "format-ethernet": " {ifname}",
+        "format-disconnected": "⚠ Disconnected",
+        "tooltip-format": "{essid} ({signalStrength}%)",
+        "on-click": "nm-connection-editor"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": " {volume}%",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "clock": {
+        "format": "󱑂 {:%H:%M  󰃭 %d/%m/%Y}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󱐋 {capacity}%",
+        "format-icons": ["", "", "", "", ""]
+    }
+}

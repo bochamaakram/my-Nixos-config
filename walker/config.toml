@@ -1,0 +1,9 @@
+[ui]
+fullscreen = false
+width = 400
+height = 300
+show_scroll_bar = false
+
+[layout]
+# Adjust spacing between items
+spacing = 5

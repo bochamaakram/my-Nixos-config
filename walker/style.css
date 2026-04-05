@@ -1,0 +1,33 @@
+#window {
+    background: transparent;
+}
+
+#box {
+    background: #1e1e2e; /* Dark background */
+    border: 2px solid #cba6f7; /* Lavender border */
+    border-radius: 12px;
+    padding: 10px;
+}
+
+#search {
+    background: #313244;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 10px;
+    color: #cdd6f4;
+}
+
+#entry {
+    padding: 5px;
+    border-radius: 6px;
+}
+
+#entry:selected {
+    background: #cba6f7;
+    color: #11111b;
+}
+
+#text {
+    font-size: 14px;
+    font-family: "JetBrainsMono Nerd Font";
+}

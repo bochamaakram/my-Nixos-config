@@ -1,0 +1,51 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "logo": {
+    "type": "file",
+    "source": "/home/akram/.config/fastfetch/logo.txt",
+    "padding": {
+      "top": 2,
+      "right": 4
+    }
+  },
+  "display": {
+    "separator": " : ",
+    "color": "cyan"
+  },
+  "modules": [
+    "title",
+    "separator",
+    {
+      "type": "custom",
+      "format": "╭──────────────── Software ────────────────",
+      "outputColor": "cyan"
+    },
+    { "type": "os", "key": "| 󱄅 ", "keyColor": "cyan" },
+    { "type": "kernel", "key": "| 󰌽 ", "keyColor": "cyan" },
+    { "type": "packages", "key": "| 󰏖 ", "keyColor": "cyan" },
+    { "type": "shell", "key": "| 󰞷 ", "keyColor": "cyan" },
+    { "type": "wm", "key": "| 󱂬 ", "keyColor": "cyan" },
+    { "type": "terminal", "key": "| 󰆍 ", "keyColor": "cyan" },
+    {
+      "type": "custom",
+      "format": "├──────────────── Hardware ────────────────",
+      "outputColor": "cyan"
+    },
+    { "type": "host", "key": "| 󰌢 ", "keyColor": "cyan" },
+    { "type": "cpu", "key": "| 󰻠 ", "keyColor": "cyan" },
+    { "type": "gpu", "key": "| 󰢮 ", "keyColor": "cyan" },
+    { "type": "memory", "key": "| 󰍛 ", "keyColor": "cyan" },
+    {
+      "type": "custom",
+      "format": "├──────────────── Uptime ──────────────────",
+      "outputColor": "cyan"
+    },
+    { "type": "uptime", "key": "| 󱎫 ", "keyColor": "cyan" },
+    {
+      "type": "custom",
+      "format": "╰──────────────────────────────────────────",
+      "outputColor": "cyan"
+    },
+    "break"
+  ]
+}

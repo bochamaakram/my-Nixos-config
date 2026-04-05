@@ -1,0 +1,66 @@
+# --- Folders to ignore (Bloat & Caches) ---
+# Most apps store temporary data or heavy caches in these subfolders
+**/cache/
+**/Cache/
+**/cached/
+**/logs/
+**/temp/
+**/tmp/
+
+# --- Specific App Bloat ---
+# Browsers (heavy and contain personal history/cookies)
+google-chrome/
+microsoft-edge/
+BraveSoftware/
+mozilla/
+
+# Discord & Electron apps
+discord/Cache/
+discord/Code\ Cache/
+discord/GPUCache/
+
+# IDE Caches (VS Code, JetBrains)
+Code/CachedData/
+Code/User/History/
+Code/User/workspaceStorage/
+Code/Backups/
+
+# --- System & Environment ---
+# Python & Node environment noise
+**/node_modules/
+**/__pycache__/
+**/venv/
+**/.env
+**/.direnv/
+
+# Nix specific (if you use flakes or direnv)
+result
+result-*
+
+# --- Security & Sensitive Data ---
+# Never track your SSH keys or GPG keys if they happen to be linked here
+**/ssh/
+**/gnupg/
+# Ignore credentials/token files
+**/*token*
+**/*history*
+**/.python_history
+**/zsh_history
+
+# --- Media & Thumbnails ---
+**/thumbnails/
+**/Thumbnails/
+
+# VS Code / Antigravity Bloat
+Antigravity/
+Code/
+# System/App specific bloat
+evolution/
+dconf/
+ibus/
+# Large binary icons/images
+wlogout/icons/*.png
+# General cache ignore
+**/CachedData/
+**/Code Cache/
+**/CachedExtensionVSIXs/
