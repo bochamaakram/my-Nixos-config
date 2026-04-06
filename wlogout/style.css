@@ -20,6 +20,7 @@ button {
     background-color: transparent;
     animation: gradient_f 20s ease-in infinite;
     transition: all 0.3s ease-in;
+    background-color: rgb(49, 63, 85);
     box-shadow: 0 0 10px 2px transparent;
     border-radius: 15px;
     border: 0px solid @color2;

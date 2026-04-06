@@ -3,7 +3,8 @@ fullscreen = false
 width = 400
 height = 300
 show_scroll_bar = false
+# Point this to the CSS file you created
+style = "style.css" 
 
 [layout]
-# Adjust spacing between items
 spacing = 5

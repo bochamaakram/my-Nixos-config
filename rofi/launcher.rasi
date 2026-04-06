@@ -1,0 +1,30 @@
+@import "~/.cache/wal/colors-rofi-dark"
+
+configuration {
+    modi: "drun";
+    show-icons: true;
+    display-drun: "󰀻";
+}
+
+window {
+    width: 400px;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+listview {
+    columns: 1;
+    lines: 8;
+    spacing: 5px;
+    fixed-height: false;
+}
+
+element {
+    padding: 10px;
+    border-radius: 8px;
+}
+
+element-icon {
+    size: 24px;
+    margin: 0 10px 0 0;
+}

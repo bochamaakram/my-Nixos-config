@@ -1,0 +1,67 @@
+[global]
+    ### Display ###
+    # Monitor where notifications appear
+    monitor = 0
+    
+    # Position and Offset
+    origin = top-right
+    offset = 20x20
+    
+    # Scale and size
+    width = 300
+    height = 200
+    notification_limit = 5
+    
+    # Progress bar (for volume/brightness)
+    progress_bar = true
+    progress_bar_height = 10
+    progress_bar_frame_width = 1
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+
+    ### Appearance ###
+    transparency = 10
+    separator_height = 2
+    padding = 12
+    horizontal_padding = 12
+    text_icon_padding = 10
+    frame_width = 2
+    frame_color = "#89b4fa"
+    
+    # Corner rounding (Requires a compositor like Hyprland)
+    corner_radius = 10
+    
+    # Font (Make sure you have a Nerd Font installed for icons)
+    font = JetBrainsMono Nerd Font 10
+    line_height = 0
+
+    ### Text Formatting ###
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    show_age_threshold = 60
+    word_wrap = yes
+    ignore_newline = no
+    stack_duplicates = true
+
+    ### Icons ###
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 64
+    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+
+[urgency_low]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    timeout = 5
+
+[urgency_normal]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    timeout = 10
+
+[urgency_critical]
+    background = "#1e1e2e"
+    foreground = "#cdd6f4"
+    frame_color = "#f38ba8"
+    timeout = 0

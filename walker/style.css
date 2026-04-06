@@ -3,31 +3,72 @@
 }
 
 #box {
-    background: #1e1e2e; /* Dark background */
-    border: 2px solid #cba6f7; /* Lavender border */
-    border-radius: 12px;
-    padding: 10px;
+    background: #1e1e2e;
+    border-radius: 16px;
+    padding: 16px;
+    /* Omarchy usually has a very subtle border or none at all */
+    border: 1px solid rgba(203, 166, 247, 0.2); 
 }
 
+/* The Search Bar */
 #search {
     background: #313244;
-    border-radius: 8px;
-    padding: 8px;
-    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 15px;
     color: #cdd6f4;
 }
 
+/* Individual Entry Container */
 #entry {
-    padding: 5px;
-    border-radius: 6px;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 4px;
 }
 
 #entry:selected {
     background: #cba6f7;
+}
+
+/* Styling the Icon */
+#icon {
+    margin-right: 15px;
+    /* Adjust size to look proportional */
+    -gtk-icon-size: 24px; 
+}
+
+/* Main Text (App Name) */
+#text {
+    color: #cdd6f4;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#entry:selected #text {
     color: #11111b;
 }
 
-#text {
-    font-size: 14px;
-    font-family: "JetBrainsMono Nerd Font";
+/* Subtext (The "Web Browser" description) */
+#subtext {
+    color: #a6adc8;
+    font-size: 11px;
+}
+
+#entry:selected #subtext {
+    color: #313244;
+}
+
+/* Activation Keys (The F1, F2 boxes on the right) */
+#activation {
+    color: #f5e0dc;
+    background: #45475a;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#entry:selected #activation {
+    background: #11111b;
+    color: #cba6f7;
 }

@@ -64,3 +64,11 @@ wlogout/icons/*.png
 **/CachedData/
 **/Code Cache/
 **/CachedExtensionVSIXs/
+# Ignore system state and database files
+*.db
+*.settings-ported
+gnome-initial-setup-done
+mimeapps.list
+user-dirs.*
+pulse/
+simple-scan/

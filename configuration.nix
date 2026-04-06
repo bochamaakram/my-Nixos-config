@@ -5,7 +5,8 @@
     ./hardware-configuration.nix
   ];
 
-  # --- Nix Settings ---
+  
+# --- Nix Settings ---
   # This allows you to use the 'nix' command without needing flakes
   nix.settings.experimental-features = [ "nix-command" ];
 
@@ -40,8 +41,12 @@
   # --- Desktop Environment & Hyprland ---
   services.xserver.enable = true;
   services.displayManager.gdm.enable = true;
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "akram";
   services.desktopManager.gnome.enable = true;
 
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -77,13 +82,17 @@
   };
 
   # --- System-wide Packages ---
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+   allowUnfree = true;
+   allowBroken = false; 
+  };
   environment.systemPackages = with pkgs; [
     # Browsers & Dev
     brave  
     vscode 
     git
-    gh 
+    gh
+    antigravity 
     postman 
     docker-compose
     nodejs_20 php php82Extensions.curl php82Extensions.mysqli mysql80
@@ -99,10 +108,13 @@
     zsh-syntax-highlighting
     meslo-lgs-nf    
     cmatrix
+    brightnessctl
+    wireplumber
     
     # Hyprland Essentials
     waybar 
-    hyprlock  
+    hyprlock
+    hypridle  
     dunst 
     rofi
     awww
@@ -125,13 +137,24 @@
   # --- Programs Configuration ---
   programs.zsh = {
     enable = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+    
+    # Use interactiveShellInit for the pywal sequences
+    interactiveShellInit = ''
+      # Import colors from pywal cache
+      if [ -f ~/.cache/wal/sequences ]; then
+          (cat ~/.cache/wal/sequences &)
+      fi
+    '';
+
+    promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+
     ohMyZsh = {
       enable = true;
-      plugins = [ "git" "zsh-autosuggestions" "zsh-syntax-highlighting" ];
-      theme = "powerlevel10k/powerlevel10k";
+      plugins = [ "git" ];
     };
   };
-
   # --- Fonts ---
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
