@@ -1,31 +1,27 @@
-#!/usr/bin/env bash
-
-# Icons
 lock="󰌾"
-hibernate="󰒲"
+aquarium="󰈺" 
 suspend="󰤄"
 reboot="󰜉"
 shutdown="󰐥"
 
-options="$lock\n$hibernate\n$suspend\n$reboot\n$shutdown"
+options="$lock\n$aquarium\n$suspend\n$reboot\n$shutdown"
 
-# Launch Rofi (Ensure this path to your .rasi is correct!)
 chosen="$(echo -e "$options" | rofi -dmenu -theme "$HOME/.config/rofi/powermenu.rasi")"
 
 case $chosen in
     $lock)
-        /run/current-system/sw/bin/hyprlock
+        loginctl lock-session
         ;;
-    $hibernate)
-        /run/current-system/sw/bin/systemctl hibernate
+    $aquarium)
+        ~/.config/rofi/aquarium_screensaver.sh
         ;;
     $suspend)
-        /run/current-system/sw/bin/systemctl suspend
+        systemctl suspend
         ;;
     $reboot)
-        /run/current-system/sw/bin/systemctl reboot
+        systemctl reboot
         ;;
     $shutdown)
-        /run/current-system/sw/bin/systemctl poweroff
+        systemctl poweroff
         ;;
 esac

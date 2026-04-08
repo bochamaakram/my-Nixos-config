@@ -108,6 +108,8 @@
     zsh-syntax-highlighting
     meslo-lgs-nf    
     cmatrix
+    asciiquarium
+    xdotool
     brightnessctl
     wireplumber
     
