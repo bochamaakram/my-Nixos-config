@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+# This should be the root folder of the repo you cloned
+ICON_DIR="$HOME/icons/yet-another-monochrome-icon-set"
+
+# Helper variable for the scalable apps folder to keep the array clean
+BASE="$ICON_DIR/apps/scalable"
+
+declare -A apps
+apps=(
+    # Web Apps
+    ["gemini"]="https://gemini.google.com/app|$BASE/icons8-gemini-ai.svg"
+    ["n8n Dashboard"]="https://n8n.srv1233953.hstgr.cloud/home/workflows|$BASE/appimagekit-draw.io.svg"
+    ["GitHub"]="https://github.com/bochamaakram|$BASE/github-desktop.svg"
+    ["whatsapp"]="https://web.whatsapp.com|$BASE/whatsapp.svg"
+    ["Portfolio"]="https://akrambouchama.com|$BASE/io.github.diegoivan.pdf_metadata_editor.svg"
+    ["youtube"]="https://www.youtube.com|$BASE/youtube-music.svg"
+    ["slack"]="https://app.slack.com/client/T05TMCR3RLK/C0ANTNQVCKV|$BASE/slack.svg"
+
+    # Local Apps
+    ["Brave"]="brave-browser|$BASE/brave.svg"
+    ["Discord"]="discord|$BASE/discord.svg"
+    ["antigravity"]="antigravity|$BASE/antigravity.svg"
+    ["VS Code"]="code|$BASE/visual-studio-code.svg"
+    ["Postman"]="postman|$BASE/postman.svg"
+    ["Neovim"]="nvim|$BASE/nvim.svg"
+    ["Kitty"]="kitty|$BASE/kitty.svg"
+    ["Terminator"]="terminator|$BASE/com.raggesilver.BlackBox.svg"
+    ["Btop"]="btop|$BASE/btop.svg"
+    ["Rofi"]="rofi|$BASE/nixos.svg"
+    ["Waypaper"]="waypaper|$BASE/preferences-desktop-wallpaper.svg"
+    ["OBS Studio"]="com.obsproject.Studio|$BASE/obs.svg"
+    ["Files"]="org.gnome.Nautilus|$BASE/dolphin.svg"
+    ["Text Editor"]="org.gnome.TextEditor|$BASE/sublime-text.svg"
+    ["Calculator"]="org.gnome.Calculator|$BASE/calc.svg"
+    ["Calendar"]="org.gnome.Calendar|$BASE/calendar.svg"
+    ["Settings"]="gnome-control-center|$BASE/ibus-setup.svg"
+    ["Disks"]="org.gnome.DiskUtility|$BASE/KDiskFree.svg"
+    ["Network"]="nm-connection-editor|$BASE/nm-device-wireless.svg"
+    ["Bluetooth"]="blueman-manager|$BASE/blueman.svg"
+)
+
+# 1. Clear the list
+list_items=""
+
+# 2. Build the list for Rofi
+# Note: Use sort to keep your menu organized
+for name in "${!apps[@]}"; do
+    IFS="|" read -r cmd icon_path <<< "${apps[$name]}"
+    list_items+="${name}\0icon\x1f${icon_path}\n"
+done
+
+# 3. Launch Rofi
+selection=$(echo -e "$list_items" | sort | rofi -dmenu -i -show-icons -p "Apps" -theme "~/.config/rofi/launcher.rasi")
+
+# 4. Execution Logic
+if [[ -n "$selection" ]]; then
+    IFS="|" read -r target icon <<< "${apps[$selection]}"
+    if [[ "$target" == http* ]]; then
+        brave --app="$target"
+    else
+        # Launching with '&' to prevent Rofi from hanging while the app is open
+        $target &
+        disown
+    fi
+fi

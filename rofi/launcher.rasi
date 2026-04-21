@@ -25,6 +25,6 @@ element {
 }
 
 element-icon {
-    size: 24px;
-    margin: 0 10px 0 0;
+    size: 2ch; /* or 32px */
+    horizontal-align: 0.5;
 }

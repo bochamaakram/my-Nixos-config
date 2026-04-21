@@ -9,10 +9,10 @@
     "margin-bottom": 0,
     "spacing": 0,
     "reload_style_on_change": true,
-
-    "modules-left": ["hyprland/workspaces"],
+    
+    "modules-left": ["custom/nixos", "hyprland/workspaces"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["network", "group/expand-3", "group/expand-2", "memory", "cpu", "battery", "clock"],
+    "modules-right": ["network","bluetooth", "group/expand-3", "group/expand-2", "memory", "cpu", "battery", "clock"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
@@ -21,7 +21,12 @@
             "default": ""
         }
     },
-
+    "custom/nixos": {
+    "format": "󱄅",
+    "on-click": "rofi -show drun -theme ~/.config/rofi/launcher.rasi",
+    "tooltip": false
+    },
+    
     "battery": {
         "states": { "warning": 30, "critical": 15 },
         "format": "{icon} {capacity}%",
@@ -33,24 +38,40 @@
     "pulseaudio": {
         "format": "{icon}",
         "format-muted": "󰝟",
-        "format-icons": { "default": ["", "", ""] }
+        "format-icons": { "default": ["", "", ""] },
+        "tooltip-format": "Volume: {volume}% {desc}"
     },
 
     "network": {
         "format-wifi": "󰤨 ",
         "format-ethernet": "󰈀 ",
-        "format-disconnected": "󰤭 "
+        "format-disconnected": "󰤭 ",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "Ethernet: {ifname}",
+        "tooltip-format-disconnected": "Disconnected",
+        "on-click": "kitty --class network-popup -e nmtui" 
     },
-
+    "bluetooth": {
+        "format": "",
+        "format-disabled": "󰂲", 
+        "format-connected": "󰂱",
+        "format-connected-battery": "󰂱",
+        "tooltip-format": "{controller_alias} - {status}",
+        "tooltip-format-connected": "{device_alias} {device_battery_percentage}%",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "kitty -e bluetui"
+    },
     "clock": {
-        "format": "{:%I:%M %p}",
+        "format": "{:%H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>"
     },
 
     "cpu": { "format": "󰻠", "interval": 1 },
-    "memory": { "format": "󰍛", "interval": 1 },
-
-    "custom/spacer": { "format": "|" },
+    "memory": { 
+    "format": "󰑭", 
+    "interval": 1,
+    "tooltip-format": "RAM Usage: {used:0.1f}GiB / {total:0.1f}GiB ({percentage}%)"
+    },
 
     "hyprland/window": {
         "format": "{}",
@@ -70,7 +91,11 @@
         "modules": ["pulseaudio", "pulseaudio/slider"]
     },
 
-    "backlight": { "format": "{icon}", "format-icons": ["󰃞", "󰃝", "󰃟", "󰃠"] },
+    "backlight": { 
+    "format": "{icon}", 
+    "format-icons": ["󰃞", "󰃝", "󰃟", "󰃠"],
+    "tooltip-format": "Brightness: {percent}%"
+    },
     "backlight/slider": { "device": "intel_backlight" },
     "pulseaudio/slider": { "device": "pulseaudio" }
 }

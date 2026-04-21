@@ -7,62 +7,80 @@
     border: none;
     border-radius: 0;
 }
-
-/* Make the main bar transparent so only the pills show */
-window#waybar {
-    background: transparent;
+#custom-nixos {
+    color: @color4; /* Using one of your wal colors */
+    font-size: 20px;
+    padding-right: 10px;
+    padding-left: 5px;
 }
-
+/* Main bar container */
+window#waybar {
+    background-color: rgba(0, 0, 0, 0.327);
+    border: 2px solid @color1;
+    border-radius: 10px;
+}
 /* THE THREE PILLS */
 .modules-left,
 .modules-center,
 .modules-right {
-    background: @background;    /* Pywal Background */
-    border: 2px solid @color1;  /* Pywal Accent Border */
-    border-radius: 20px;
-    padding: 2px 10px;
-    margin: 5px 0px;
+    padding: 0px 10px;
+    margin: 2px 0px;
 }
 
-/* DESKTOPS PILL (Left) */
+/* WORKSPACES */
 #workspaces button {
     color: @foreground;
-    padding: 0 6px;
-    margin: 0 2px;
+    padding: 0 4px;
 }
 
 #workspaces button.active {
     color: @color2;
 }
 
-/* RUNNING APP PILL (Center) */
+/* CENTER WINDOW NAME */
 #window {
     color: @color3;
     padding: 0 15px;
 }
 
-/* STATUS PILL (Right) */
-#network, #pulseaudio, #backlight, #memory, #cpu, #battery, #clock {
+/* RIGHT MODULES COLORS */
+#network, #pulseaudio,#bluetooth , #backlight, #memory, #cpu, #battery, #clock {
     padding: 0 8px;
-    background: transparent;
 }
 
-#battery { color: @color5; }
-#network { color: @color5; }
-#cpu { color: @color5; }
-#clock { color: @foreground; }
-#pulseaudio { color: @color5; }
-#backlight { color: @color5; }
-#memory { color: @color5; }
+#battery, #network,#bluetooth , #cpu, #pulseaudio, #backlight, #memory { 
+    color: @color5; 
+}
+#bluetooth { 
+    color: @color5; 
+}
+#clock { 
+    color: @foreground; 
+}
 
+/* SLIDERS FIX */
+#backlight-slider, 
+#pulseaudio-slider {
+    min-width: 100px;
+    margin: 0 10px;
+}
 
-/* Remove any background from groups/drawers inside the pill */
+/* Slider Track */
+#backlight-slider trough,
+#pulseaudio-slider trough {
+    min-height: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+/* Slider Fill */
+#backlight-slider highlight,
+#pulseaudio-slider highlight {
+    background-color: @color2;
+    border-radius: 5px;
+}
+
+/* Clean up Group backgrounds */
 #group-expand-2, #group-expand-3 {
     background: transparent;
-    padding: 0;
-}
-
-/* Hide the drawer content background */
-#backlight-slider, #pulseaudio-slider {
-    margin: 0 5px;
 }
