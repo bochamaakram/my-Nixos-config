@@ -19,7 +19,7 @@ apps=(
 
     # Local Apps
     ["Brave"]="brave-browser|$BASE/brave.svg"
-    ["Discord"]="discord|$BASE/discord.svg"
+    ["Discord"]="vesktop|$BASE/discord.svg"
     ["antigravity"]="antigravity|$BASE/antigravity.svg"
     ["VS Code"]="code|$BASE/visual-studio-code.svg"
     ["Postman"]="postman|$BASE/postman.svg"

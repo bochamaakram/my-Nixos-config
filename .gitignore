@@ -46,10 +46,16 @@ result-*
 **/*history*
 **/.python_history
 **/zsh_history
+gh/
+clerk/
+vesktop/
+Postman/
+rofi/passwords.json
 
 # --- Media & Thumbnails ---
 **/thumbnails/
 **/Thumbnails/
+papers/
 
 # VS Code / Antigravity Bloat
 Antigravity/
@@ -58,6 +64,8 @@ Code/
 evolution/
 dconf/
 ibus/
+cava/
+obs-studio/
 # Large binary icons/images
 wlogout/icons/*.png
 # General cache ignore
@@ -72,3 +80,4 @@ mimeapps.list
 user-dirs.*
 pulse/
 simple-scan/
+wal-colors.css

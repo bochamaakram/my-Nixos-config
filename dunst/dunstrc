@@ -1,18 +1,13 @@
 [global]
     ### Display ###
-    # Monitor where notifications appear
     monitor = 0
-    
-    # Position and Offset
     origin = top-right
     offset = 20x20
-    
-    # Scale and size
     width = 300
     height = 200
     notification_limit = 5
     
-    # Progress bar (for volume/brightness)
+    # Progress bar
     progress_bar = true
     progress_bar_height = 10
     progress_bar_frame_width = 1
@@ -26,12 +21,12 @@
     horizontal_padding = 12
     text_icon_padding = 10
     frame_width = 2
-    frame_color = "#89b4fa"
     
-    # Corner rounding (Requires a compositor like Hyprland)
+    # Pywal dynamic colors
+    frame_color = "{color4}"
+    separator_color = "frame"
+    
     corner_radius = 10
-    
-    # Font (Make sure you have a Nerd Font installed for icons)
     font = JetBrainsMono Nerd Font 10
     line_height = 0
 
@@ -51,17 +46,17 @@
     icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
 [urgency_low]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
+    background = "{background}"
+    foreground = "{foreground}"
     timeout = 5
 
 [urgency_normal]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
+    background = "{background}"
+    foreground = "{foreground}"
     timeout = 10
 
 [urgency_critical]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
-    frame_color = "#f38ba8"
+    background = "{background}"
+    foreground = "{foreground}"
+    frame_color = "{color1}"
     timeout = 0
