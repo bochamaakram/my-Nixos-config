@@ -1,0 +1,11 @@
+* {
+    bg-panel:         rgba(23, 14, 18, 80%);
+    bg-container:     rgba(56, 28, 44, 80%);
+    bg-container-hi:  #4A2838;
+    bg-bright:        #603050;
+    accent:           #EEA8C0;
+    accent-dim:       rgba(238, 168, 192, 18%);
+    text-primary:     #F0DEE5;
+    text-secondary:   #A88090;
+    separator-line:   rgba(240, 222, 229, 10%);
+}

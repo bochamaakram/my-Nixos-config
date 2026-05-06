@@ -23,7 +23,7 @@
     },
     "custom/nixos": {
     "format": "󱄅",
-    "on-click": "rofi -show drun -theme ~/.config/rofi/rofi-apps",
+    "on-click": "~/.config/rofi/rofi-apps",
     "tooltip": false
     },
     

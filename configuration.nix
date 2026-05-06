@@ -1,9 +1,10 @@
 { config, pkgs, lib, ... }:
 
+
 {
   imports = [ 
-    ./hardware-configuration.nix
-  ];
+    ./hardware-configuration.nix    
+ ];
 
   # --- Nix Settings ---
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -15,12 +16,43 @@
 
   security.pam.services.hyprlock = {};
 
-# --- Networking (Standard & Stable) ---
+  services.picom = {
+    enable = true;
+    backend = "glx";
+    vSync = true;
+    settings = {
+      blur = {
+        method = "dual_kawase";
+        strength = 7;
+      };
+    };
+  };
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+# Add this to your environment.variables or environment.sessionVariables
+  environment.sessionVariables = {
+    QML2_IMPORT_PATH = [
+      "${pkgs.qt6.qt5compat}/lib/qt-6/qml"
+      "${pkgs.qt6.qtwayland}/lib/qt-6/qml"
+    ];
+  };
+
+  # Optional: Enable autodiscovery of network printers
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+  services.printing.drivers = [ pkgs.hplip pkgs.cnijfilter2 ];
+
+  # --- Networking ---
   networking.hostName = "nixos";
   networking.networkmanager.enable = true; 
   networking.wireless.iwd.enable = false;
 
- # --- Localization ---
+  # --- Localization ---
   time.timeZone = "Africa/Casablanca";
   i18n.defaultLocale = "en_GB.UTF-8";
   
@@ -36,7 +68,17 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-  # --- Desktop Environment & Hyprland ---
+  # --- Power Management (ThinkPad Specific) ---
+  services.power-profiles-daemon.enable = false;
+  services.tlp = {
+    enable = true;
+    settings = {
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 80;  
+    };
+  };
+
+  # --- Desktop Environment ---
   services.xserver = {
     enable = true;
     xkb = {
@@ -71,19 +113,18 @@
     wireplumber.enable = true;
   };
 
-  # --- XDG Portals (Crucial for OBS Screen Sharing) ---
+  # --- XDG Portals ---
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-# --- Bluetooth Support ---
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  # --- Bluetooth Support ---
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
-  # --- Services ---
-  services.printing.enable = true;
+  # --- Virtualization ---
   services.flatpak.enable = true;
   virtualisation.docker.enable = true;
 
@@ -99,32 +140,42 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    quickshell
+    playerctl
+    qt6.qtwayland
+    qt6.qt5compat
+    libpulseaudio
+    brightnessctl
+    networkmanagerapplet
+    gnome-themes-extra
     # Browsers & Dev
     brave  
-    vscode 
-    git
-    gh
+    vscode
     antigravity 
+    git
+    jq
+    gh 
     uv
-    claude-code
     postman 
     docker-compose
     nodejs_20
     php php82Extensions.curl
     php82Extensions.mysqli
-    mysql80
 
     # Terminal & Tools
     kitty 
     terminator 
     neovim 
-    btop 
+    btop
+    opencode 
     fastfetch 
     zsh-powerlevel10k
     zsh-autosuggestions
     zsh-syntax-highlighting
     meslo-lgs-nf    
     cmatrix
+    cava
+    vesktop
     asciiquarium
     xdotool
     brightnessctl
@@ -134,16 +185,21 @@
     waybar 
     hyprlock
     hypridle  
-    dunst 
+    dunst
+    cliphist
+    wl-clipboard 
     rofi
     awww
+    qt6.qtwayland
     obs-studio
     elephant
     walker
+    qt6.qt5compat
     pywal
-    impala
     bluetui  
-    waypaper 
+    waypaper
+    quickshell
+    polkit_gnome 
     wl-clipboard 
     grim 
     slurp
@@ -154,7 +210,6 @@
     catppuccin-cursors.mochaMauve
     blueman networkmanagerapplet  
   ];
-
 # --- Programs Configuration ---
   programs.zsh = {
     enable = true;
@@ -178,6 +233,8 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.meslo-lg
   ];
+
+security.polkit.enable = true;
 
   # --- Cleanup & State ---
   nix.gc = {

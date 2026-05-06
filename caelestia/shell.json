@@ -1,0 +1,94 @@
+{
+    "appearance": {
+        "padding": {
+            "scale": 0.9888394635249481
+        },
+        "rounding": {
+            "scale": 1.4604801880989193
+        },
+        "spacing": {
+            "scale": 0.1
+        },
+        "transparency": {
+            "base": 0.5555946373147187,
+            "enabled": false,
+            "layers": 0.5597841199431175
+        }
+    },
+    "background": {
+        "desktopClock": {
+            "background": {
+                "blur": false,
+                "enabled": false,
+                "opacity": 0.5528938117200392
+            },
+            "enabled": true,
+            "invertColors": false,
+            "position": "top-left",
+            "shadow": {
+                "blur": 0.42237607244611186,
+                "enabled": true,
+                "opacity": 0.48922064752862005
+            }
+        },
+        "enabled": true,
+        "visualiser": {
+            "autoHide": true,
+            "enabled": false
+        },
+        "wallpaperEnabled": false
+    },
+    "bar": {
+        "activeWindow": {
+            "compact": true,
+            "inverted": true
+        },
+        "clock": {
+            "background": false,
+            "showDate": false,
+            "showIcon": false
+        },
+        "dragThreshold": 6,
+        "persistent": true,
+        "popouts": {
+            "activeWindow": true,
+            "tray": true
+        },
+        "scrollActions": {
+            "workspaces": true
+        },
+        "showOnHover": true,
+        "status": {
+            "showAudio": false,
+            "showBattery": true,
+            "showBluetooth": true,
+            "showKbLayout": false,
+            "showLockStatus": true,
+            "showMicrophone": true,
+            "showNetwork": true
+        },
+        "tray": {
+            "background": false
+        },
+        "workspaces": {
+            "activeIndicator": true,
+            "maxWindowIcons": 5,
+            "showWindows": true,
+            "shown": 5
+        }
+    },
+    "border": {
+        "rounding": 12,
+        "thickness": 7
+    },
+    "dashboard": {
+        "performance": {
+            "showBattery": true
+        }
+    },
+    "launcher": {
+        "enabled": true,
+        "favouriteApps": [
+        ]
+    }
+}

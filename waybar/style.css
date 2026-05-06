@@ -15,7 +15,7 @@
 }
 /* Main bar container */
 window#waybar {
-    background-color: rgba(0, 0, 0, 0.327);
+    background-color: rgba(0, 0, 0, 0.623);
     border: 2px solid @color1;
     border-radius: 10px;
 }
