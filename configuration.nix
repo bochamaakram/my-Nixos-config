@@ -136,38 +136,36 @@
     shell = pkgs.zsh;
   };
 
-  # --- System-wide Packages ---
+# --- System-wide Configuration ---
   nixpkgs.config.allowUnfree = true;
-
+   # --- System-wide Packages ---
   environment.systemPackages = with pkgs; [
-    quickshell
-    playerctl
+    # Core Utilities & Libraries
+    unzip zip
     qt6.qtwayland
     qt6.qt5compat
     libpulseaudio
-    brightnessctl
-    networkmanagerapplet
     gnome-themes-extra
-    # Browsers & Dev
-    brave  
-    vscode
-    antigravity 
+
+    # Development & Runtimes
     git
     jq
     gh 
     uv
-    postman 
     docker-compose
-    nodejs_20
-    php php82Extensions.curl
+    (python3.withPackages (ps: with ps; [ pip ]))
+    nodejs
+    php 
+    php82Extensions.curl
     php82Extensions.mysqli
+    antigravity 
+    opencode 
 
-    # Terminal & Tools
+    # Terminal, Shell & Visuals
     kitty 
     terminator 
     neovim 
     btop
-    opencode 
     fastfetch 
     zsh-powerlevel10k
     zsh-autosuggestions
@@ -175,13 +173,18 @@
     meslo-lgs-nf    
     cmatrix
     cava
-    vesktop
     asciiquarium
-    xdotool
+
+    # Hardware & System Management
     brightnessctl
     wireplumber
-    
-    # Hyprland Essentials
+    playerctl
+    networkmanagerapplet
+    blueman  
+    polkit_gnome 
+    xdotool
+
+    # Hyprland Environment
     waybar 
     hyprlock
     hypridle  
@@ -189,26 +192,20 @@
     cliphist
     wl-clipboard 
     rofi
-    awww
-    qt6.qtwayland
-    obs-studio
-    elephant
     walker
-    qt6.qt5compat
-    pywal
-    bluetui  
+    awww
     waypaper
     quickshell
-    polkit_gnome 
-    wl-clipboard 
+    pywal
+    bluetui  
     grim 
     slurp
-    
+    obs-studio
+
     # Theme Helpers
     catppuccin-gtk 
     catppuccin-papirus-folders 
     catppuccin-cursors.mochaMauve
-    blueman networkmanagerapplet  
   ];
 # --- Programs Configuration ---
   programs.zsh = {
