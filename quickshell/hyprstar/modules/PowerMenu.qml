@@ -29,7 +29,7 @@ PopupWindow {
     property url shutdownIcon: iconDir + "/power.svg"
 
     // ---------- commands ----------
-    property var lockCommand: ["qs", "ipc", "call", "lockscreen", "lock"]
+    property var lockCommand:     ["hyprlock"]
     property var sleepCommand:    ["systemctl", "suspend"]
     property var logoutCommand:   ["hyprctl", "dispatch", "exit"]
     property var rebootCommand:   ["systemctl", "reboot"]

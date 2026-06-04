@@ -1,6 +1,6 @@
-// modules/Power.qml
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import qs.theme as Theme
 
 Item {
@@ -9,6 +9,13 @@ Item {
     implicitHeight: 28
     
     property bool open: false
+
+    IpcHandler {
+        target: "powermenu"
+        function toggle(): void { root.open = !root.open }
+        function open(): void { root.open = true }
+        function close(): void { root.open = false }
+    }
     
     // Power button icon
     property url powerIcon: Qt.resolvedUrl("../assets/icons/power.svg")

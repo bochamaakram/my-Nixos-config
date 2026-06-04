@@ -29,7 +29,7 @@ Item {
     // Powered: yes/no
     Process {
         id: poweredProc
-        command: ["bash", "-lc", "bluetoothctl show | awk -F': ' '/Powered/ {print $2; exit}'"]
+        command: ["bash", "-lc", "dbus-send --system --dest=org.bluez --print-reply /org/bluez/hci0 org.freedesktop.DBus.Properties.Get string:org.bluez.Adapter1 string:Powered 2>/dev/null | grep -q 'boolean true' && echo 'true' || echo 'false'"]
 
         stdout: StdioCollector {
             onStreamFinished: {
@@ -43,36 +43,21 @@ Item {
         }
     }
 
-    // First connected device line:
-    // "Device AA:BB:CC:DD:EE:FF Some Device Name"
+    // First connected device:
     Process {
         id: connectedDevProc
-        command: ["bash", "-lc", "bluetoothctl devices Connected | head -n1"]
+        command: ["bash", "-lc", "dbus-send --system --dest=org.bluez --print-reply / org.freedesktop.DBus.ObjectManager.GetManagedObjects | awk '/object path/ { name = \"\"; conn = \"false\" } /string \"Name\"/ { getline; name = $0; sub(/.*string \"/, \"\", name); sub(/\"$/, \"\", name); if (conn == \"true\" && name != \"\") { print name; exit } } /string \"Connected\"/ { getline; conn = $3; if (conn == \"true\" && name != \"\") { print name; exit } }'"]
 
         stdout: StdioCollector {
             onStreamFinished: {
-                var line = text.trim()
-
-                if (!root.powered || line.length === 0) {
+                var name = text.trim()
+                if (!root.powered || name.length === 0) {
                     root.connected = false
                     root.deviceName = ""
-                    return
+                } else {
+                    root.deviceName = name
+                    root.connected = true
                 }
-
-                if (line.indexOf("Device ") === 0) {
-                    var rest = line.slice(7) // after "Device "
-                    var firstSpace = rest.indexOf(" ")
-                    if (firstSpace > 0) {
-                        var name = rest.slice(firstSpace + 1).trim()
-                        root.deviceName = name
-                        root.connected = name.length > 0
-                        return
-                    }
-                }
-
-                // fallback
-                root.connected = false
-                root.deviceName = ""
             }
         }
     }

@@ -246,7 +246,11 @@ PopupWindow {
                     rowSpacing: Appearance.margin.large
 
                     Network { Layout.fillWidth: true; Layout.preferredHeight: 60 }
-                    Bluetooth { Layout.fillWidth: true; Layout.preferredHeight: 60 }
+                    Bluetooth {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 60
+                        onActivated: pop.playCloseAnim()
+                    }
                     Inhibitor { Layout.fillWidth: true; Layout.preferredHeight: 60 }
                     Dnd { Layout.fillWidth: true; Layout.preferredHeight: 60 }
                 }

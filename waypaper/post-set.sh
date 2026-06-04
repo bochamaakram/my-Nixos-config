@@ -1,10 +1,11 @@
-#!/bin/bash
-# The path to the wallpaper is passed as the first argument by waypaper
-wallpaper=$1
+#!/usr/bin/env bash
 
-# Run pywal
+# The path to the wallpaper is passed as the first argument by waypaper
+wallpaper="$1"
+
+# Run pywal to generate the color palette
 wal -i "$wallpaper"
 
-# Optional: Reload your WM or bar if they don't auto-update
-# Example for sway/i3: 
-# swapy msg reload
+# Run the Nix-shell script to update Discord colors
+# Using the absolute path ensures it works no matter where Waypaper starts
+/home/akram/walcord/update_discord.sh

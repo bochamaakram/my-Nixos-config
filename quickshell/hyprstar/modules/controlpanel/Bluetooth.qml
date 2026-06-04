@@ -11,7 +11,7 @@ Item {
     implicitHeight: 60
     Layout.fillWidth: true
 
-    property var onActivate: function() {}
+    signal activated()
     property string fallbackTitle: "Bluetooth"
 
     readonly property bool isConnected: Services.Bluetooth.connected
@@ -24,25 +24,35 @@ Item {
     readonly property color titleColor:    isPowered ? Theme.Theme.gridBttn_on_ttl : Theme.Theme.gridBttn_off_ttl
     readonly property color subtitleColor: isPowered ? Theme.Theme.gridBttn_on_subt : Theme.Theme.gridBttn_off_subt
 
-    Component.onCompleted: {
-        console.log("[Bluetooth] theme =", Theme.Theme.current)
-    }
-
     function btIcon(powered, connected) {
         if (!powered) return "󰂲"     // off
         if (connected) return "󰂱"    // connected
         return "󰂯"                   // on (not connected)
     }
 
-    function subtitleText() {
-        if (!isPowered) return "Off"
-        return isConnected ? "Connected" : "On"
-    }
-
     // Toggle Bluetooth power
     Process {
         id: btPowerProc
-        command: ["bash", "-lc", "bluetoothctl power " + (root.isPowered ? "off" : "on")]
+        command: ["bash", "-lc", "dbus-send --system --dest=org.bluez --print-reply /org/bluez/hci0 org.freedesktop.DBus.Properties.Set string:org.bluez.Adapter1 string:Powered variant:boolean:" + (root.isPowered ? "false" : "true")]
+    }
+
+    Loader {
+        id: bluetoothMenuLoader
+        active: false
+        source: Qt.resolvedUrl("BluetoothMenu.qml")
+    }
+
+    function toggleBluetoothMenu() {
+        bluetoothMenuLoader.active = true
+        const m = bluetoothMenuLoader.item
+        if (m && m.openFrom) {
+            m.openFrom(card, root)
+        }
+    }
+
+    function subtitleText() {
+        if (!isPowered) return "Off"
+        return isConnected ? "Connected" : "On"
     }
 
     Rectangle {
@@ -98,23 +108,87 @@ Item {
                     elide: Text.ElideRight
                 }
             }
+
+            Rectangle {
+                id: manageBtn
+                width: 26
+                height: 26
+                radius: 8
+                color: "transparent"
+                border.width: 1
+                border.color: "transparent"
+                Layout.alignment: Qt.AlignVCenter
+
+                property bool hovered: false
+                property bool pressed: false
+
+                states: [
+                    State {
+                        name: "hovered"
+                        when: manageBtn.hovered && !manageBtn.pressed
+                        PropertyChanges { target: manageBtn; color: "#22ffffff"; border.color: "#33ffffff" }
+                    },
+                    State {
+                        name: "pressed"
+                        when: manageBtn.pressed
+                        PropertyChanges { target: manageBtn; color: "#44ffffff"; border.color: "#55ffffff" }
+                    }
+                ]
+
+                Behavior on color { ColorAnimation { duration: 110 } }
+                Behavior on border.color { ColorAnimation { duration: 110 } }
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "󰅂"
+                    font.family: "Hack Nerd Font"
+                    font.pixelSize: 14
+                    color: titleColor
+                    opacity: isPowered ? 0.9 : 0.5
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onEntered: manageBtn.hovered = true
+                    onExited: { manageBtn.hovered = false; manageBtn.pressed = false }
+                    onPressed: manageBtn.pressed = true
+                    onReleased: manageBtn.pressed = false
+                    onClicked: {
+                        root.toggleBluetoothMenu()
+                        root.activated()
+                    }
+                }
+            }
         }
 
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             cursorShape: Qt.PointingHandCursor
             onEntered: card.hovered = true
-            onExited: card.hovered = false
-            onPressed: card.pressed = true
-            onReleased: card.pressed = false
-            onClicked: {
-                // toggle power
-                btPowerProc.running = false
-                btPowerProc.running = true
-
-                // keep your existing hook (open menu, etc.)
-                root.onActivate()
+            onExited: { card.hovered = false; card.pressed = false }
+            onPressed: (mouse) => {
+                if (mouse.button === Qt.LeftButton) {
+                    card.pressed = true
+                }
+            }
+            onReleased: (mouse) => {
+                if (mouse.button === Qt.LeftButton) {
+                    card.pressed = false
+                }
+            }
+            onClicked: (mouse) => {
+                if (mouse.button === Qt.LeftButton) {
+                    // Left click: Open devices list menu
+                    root.toggleBluetoothMenu()
+                } else if (mouse.button === Qt.RightButton) {
+                    // Right click: Toggle bluetooth power
+                    btPowerProc.running = false
+                    btPowerProc.running = true
+                }
             }
         }
     }

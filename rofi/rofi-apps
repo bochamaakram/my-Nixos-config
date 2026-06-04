@@ -17,19 +17,20 @@ apps=(
     ["youtube"]="https://www.youtube.com|$BASE/youtube-music.svg"
     ["slack"]="https://app.slack.com/client/T05TMCR3RLK/C0ANTNQVCKV|$BASE/slack.svg"
 
-    # Local Apps
-    ["Brave"]="brave-browser|$BASE/brave.svg"
-    ["Discord"]="vesktop|$BASE/discord.svg"
+    # Local Apps (Updated Flatpaks & Native Fixes)
+    ["Brave"]="flatpak run com.brave.Browser|$BASE/brave.svg"
+    ["Discord"]="flatpak run dev.vencord.Vesktop|$BASE/discord.svg"
+    ["LocalSend"]="flatpak run org.localsend.localsend_app|$BASE/localsend.svg"
     ["antigravity"]="antigravity|$BASE/antigravity.svg"
-    ["VS Code"]="code|$BASE/visual-studio-code.svg"
-    ["Postman"]="postman|$BASE/postman.svg"
+    ["VS Code"]="flatpak run com.visualstudio.code|$BASE/visual-studio-code.svg"
+    ["Postman"]="flatpak run com.getpostman.Postman|$BASE/postman.svg"
     ["Neovim"]="nvim|$BASE/nvim.svg"
     ["Kitty"]="kitty|$BASE/kitty.svg"
     ["Terminator"]="terminator|$BASE/com.raggesilver.BlackBox.svg"
     ["Btop"]="btop|$BASE/btop.svg"
-    ["Rofi"]="rofi|$BASE/nixos.svg"
+    ["spotify"]="flatpak run com.spotify.Client|$BASE/spotify.svg"
     ["Waypaper"]="waypaper|$BASE/preferences-desktop-wallpaper.svg"
-    ["OBS Studio"]="com.obsproject.Studio|$BASE/obs.svg"
+    ["OBS Studio"]="obs|$BASE/obs.svg"
     ["Files"]="org.gnome.Nautilus|$BASE/dolphin.svg"
     ["Text Editor"]="org.gnome.TextEditor|$BASE/sublime-text.svg"
     ["Calculator"]="org.gnome.Calculator|$BASE/calc.svg"
@@ -57,7 +58,9 @@ selection=$(echo -e "$list_items" | sort | rofi -dmenu -i -show-icons -p "Apps" 
 if [[ -n "$selection" ]]; then
     IFS="|" read -r target icon <<< "${apps[$selection]}"
     if [[ "$target" == http* ]]; then
-        brave --app="$target"
+        # Modified to use the new Flatpak instance of Brave for webapps/PWAs
+        flatpak run com.brave.Browser --app="$target" &
+        disown
     else
         # Launching with '&' to prevent Rofi from hanging while the app is open
         $target &

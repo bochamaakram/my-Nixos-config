@@ -4,8 +4,6 @@ import Quickshell
 import Quickshell.Widgets
 import Quickshell.Io
 import qs.services as Services
-
-// uses: theme/Theme.qml (pragma Singleton, root Singleton { ... })
 import qs.theme as Theme
 
 Item {
@@ -13,7 +11,7 @@ Item {
     implicitHeight: 60
     Layout.fillWidth: true
 
-    property var onActivate: function() {}
+    signal activated()
 
     readonly property bool isConnected: Services.Network.connected
     property bool wifiEnabled: true
@@ -35,10 +33,6 @@ Item {
     readonly property color subtitleColor: {
         if (!wifiEnabled) return Theme.Theme.gridBttn_off_subt
         return isConnected ? Theme.Theme.gridBttn_on_subt : Theme.Theme.gridBttn_disc_subt
-    }
-
-    Component.onCompleted: {
-        console.log("[Network] theme =", Theme.Theme.current)
     }
 
     function wifiIcon(enabled, connected, strength) {
@@ -80,6 +74,20 @@ Item {
     Process {
         id: wifiToggleProc
         command: ["bash", "-lc", "nmcli radio wifi " + (root.wifiEnabled ? "off" : "on")]
+    }
+
+    Loader {
+        id: networkMenuLoader
+        active: false
+        source: Qt.resolvedUrl("NetworkMenu.qml")
+    }
+
+    function toggleNetworkMenu() {
+        networkMenuLoader.active = true
+        const m = networkMenuLoader.item
+        if (m && m.openFrom) {
+            m.openFrom(card, root)
+        }
     }
 
     Rectangle {
@@ -135,22 +143,74 @@ Item {
                     elide: Text.ElideRight
                 }
             }
+
+            // Settings Chevron Arrow Button
+            Rectangle {
+                id: manageBtn
+                width: 28
+                height: 28
+                radius: 14
+                color: pressed ? "#33ffffff" : (hovered ? "#15ffffff" : "transparent")
+                Layout.alignment: Qt.AlignVCenter
+
+                property bool hovered: false
+                property bool pressed: false
+
+                Behavior on color { ColorAnimation { duration: 110 } }
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "󰅂" // Nerd Font right chevron
+                    font.family: "Hack Nerd Font"
+                    font.pixelSize: 13
+                    color: root.titleColor
+                    opacity: manageBtn.hovered ? 1.0 : 0.8
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    onEntered: manageBtn.hovered = true
+                    onExited: { manageBtn.hovered = false; manageBtn.pressed = false }
+                    onPressed: manageBtn.pressed = true
+                    onReleased: manageBtn.pressed = false
+                    onClicked: {
+                        root.toggleNetworkMenu()
+                        root.activated()
+                    }
+                }
+            }
         }
 
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             cursorShape: Qt.PointingHandCursor
             onEntered: card.hovered = true
-            onExited: card.hovered = false
-            onPressed: card.pressed = true
-            onReleased: card.pressed = false
-            onClicked: {
-                wifiToggleProc.running = false
-                wifiToggleProc.running = true
-                wifiStateProc.running = false
-                wifiStateProc.running = true
-                root.onActivate()
+            onExited: { card.hovered = false; card.pressed = false }
+            onPressed: (mouse) => {
+                if (mouse.button === Qt.LeftButton) {
+                    card.pressed = true
+                }
+            }
+            onReleased: (mouse) => {
+                if (mouse.button === Qt.LeftButton) {
+                    card.pressed = false
+                }
+            }
+            onClicked: (mouse) => {
+                if (mouse.button === Qt.LeftButton) {
+                    // Left click: Open networks list
+                    root.toggleNetworkMenu()
+                } else if (mouse.button === Qt.RightButton) {
+                    // Right click: Toggle WiFi power
+                    wifiToggleProc.running = false
+                    wifiToggleProc.running = true
+                    wifiStateProc.running = false
+                    wifiStateProc.running = true
+                }
             }
         }
     }
